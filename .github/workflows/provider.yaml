@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - lakefs_hook_test
 
 jobs:
   build-provider:
