@@ -42,7 +42,7 @@ class LakeFSHook(BaseHook):
     def get_conn(self) -> LakeFSClient:
         conn = self.get_connection(self.lakefs_conn_id)
         configuration = lakefs_client.Configuration()
-        if conn.conn_type == "http" and conn.extra_dejson.get("access_key_id") and conn.extra_dejson.get("secret_access_key"):
+        if (conn.conn_type == "http" or conn.conn_type=="generic") and conn.extra_dejson.get("access_key_id") and conn.extra_dejson.get("secret_access_key"):
             configuration.username = conn.extra_dejson.get("access_key_id")
             configuration.password = conn.extra_dejson.get("secret_access_key")
         else:
@@ -155,7 +155,7 @@ class LakeFSHook(BaseHook):
         import requests
         import json
         url = conn.host+"/api/v1/auth/login"
-        if conn.conn_type == "http" and conn.extra_dejson.get("access_key_id") and conn.extra_dejson.get("secret_access_key"):
+        if (conn.conn_type == "http" or conn.conn_type=="generic") and conn.extra_dejson.get("access_key_id") and conn.extra_dejson.get("secret_access_key"):
             login = conn.extra_dejson.get("access_key_id")
             password = conn.extra_dejson.get("secret_access_key")
         else:
